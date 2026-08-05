@@ -1,33 +1,18 @@
 class Solution {
     public List<List<String>> groupAnagrams(String[] strs) {
 
-        HashMap<String, List<String>> map = new HashMap<>();
+        Map<String, List<String>> ans = new HashMap<>();
 
-        for (String str : strs) {
-
-            int[] freq = new int[26];
-
-            // Count frequency of each character
-            for (char ch : str.toCharArray()) {
-                freq[ch - 'a']++;
+        for (String s : strs) {
+            char[] chars = s.toCharArray();
+            Arrays.sort(chars);
+            String key = new String(chars);
+            if (!ans.containsKey(key)) {
+                ans.put(key, new ArrayList<>());
             }
-
-            // Build a unique key from the frequency array
-            StringBuilder key = new StringBuilder();
-
-            for (int count : freq) {
-                key.append(count).append("#");
-            }
-
-            String k = key.toString();
-
-            if (!map.containsKey(k)) {
-                map.put(k, new ArrayList<>());
-            }
-
-            map.get(k).add(str);
+            ans.get(key).add(s);
         }
 
-        return new ArrayList<>(map.values());
+        return new ArrayList<>(ans.values()); 
     }
 }
